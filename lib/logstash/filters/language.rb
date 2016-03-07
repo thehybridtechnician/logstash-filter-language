@@ -31,10 +31,17 @@ require 'whatlanguage'
 
   public
   def filter(event)
-    ## Concatinate fields
-    checkValue = @fields.join(" ")
 
-    event['detected_lang'] = @whatLang(checkValue)
+    ## Concatinate fields
+
+    checkValue = []
+
+    @fields.each { |v|
+      checkValue << event[v]
+    }
+
+
+    event['detected_lang'] = @whatLang.language(checkValue.join(' '))
     # filter_matched should go in the last line of our successful code
     filter_matched(event)
   end # def filter
