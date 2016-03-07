@@ -2,11 +2,13 @@
 require "logstash/filters/base"
 require "logstash/namespace"
 
-# This example filter will replace the contents of the default 
+# This example filter will replace the contents of the default
 # message field with whatever you specify in the configuration.
 #
 # It is only intended to be used as an example.
-class LogStash::Filters::Example < LogStash::Filters::Base
+class LogStash::Filters::Language < LogStash::Filters::Base
+
+require 'whatlanguage'
 
   # Setting the config_name here is required. This is how you
   # configure this filter from your Logstash config.
@@ -17,26 +19,22 @@ class LogStash::Filters::Example < LogStash::Filters::Base
   #   }
   # }
   #
-  config_name "example"
-  
+  config_name "language"
+
   # Replace the message with this value.
-  config :message, :validate => :string, :default => "Hello World!"
-  
+  config :fields, :validate => :array
 
   public
   def register
-    # Add instance variables 
+    @whatLang = WhatLanguage.new(:all)
   end # def register
 
   public
   def filter(event)
+    ## Concatinate fields
+    checkValue = @fields.join(" ")
 
-    if @message
-      # Replace the event message with our message as configured in the
-      # config file.
-      event["message"] = @message
-    end
-
+    event['detected_lang'] = @whatLang(checkValue)
     # filter_matched should go in the last line of our successful code
     filter_matched(event)
   end # def filter
