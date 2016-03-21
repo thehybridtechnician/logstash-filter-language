@@ -11,7 +11,7 @@ describe LogStash::Filters::Language do
       }
     CONFIG
 
-    sample "Logstash-filter-language creates a field with detected language."
+    sample "Logstash-filter-language creates a field with detected language." do
       insist { subject["detected_lang"] } == "en"
     end
   end
