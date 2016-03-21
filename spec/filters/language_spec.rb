@@ -3,19 +3,16 @@ require 'spec_helper'
 require "logstash/filters/language"
 
 describe LogStash::Filters::Language do
-  describe "Set Language Checker" do
-    let(:config) do <<-CONFIG
+
+  describe "defaults" do
+    config <<-CONFIG
       filter {
-        language {
-          fields => ["message"]
-        }
+        language { }
       }
     CONFIG
-    end
 
-    sample("message" => "Logstash-filter-language creates a field with detected language.") do
-      expect(subject).to include("message")
-      expect(subject['detected_lang']).to eq('en')
+    sample "Logstash-filter-language creates a field with detected language."
+      insist { subject["detected_lang"] } == "en"
     end
-  end
+  end  
 end
