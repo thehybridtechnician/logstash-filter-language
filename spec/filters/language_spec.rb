@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'spec_helper'
-require "logstash/filters/example"
+require "logstash/filters/language"
 
 describe LogStash::Filters::Language do
   describe "Set Language Checker" do
