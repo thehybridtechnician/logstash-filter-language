@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'spec_helper'
+require "logstash/devutils/rspec/spec_helper"
 require "logstash/filters/language"
 
 describe LogStash::Filters::Language do
@@ -14,5 +14,5 @@ describe LogStash::Filters::Language do
     sample "Logstash-filter-language creates a field with detected language."
       insist { subject["detected_lang"] } == "en"
     end
-  end  
+  end
 end
